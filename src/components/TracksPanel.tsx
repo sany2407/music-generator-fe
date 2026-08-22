@@ -73,10 +73,14 @@ export default function TracksPanel({
                     : "bg-white/8 group-hover:bg-white/12"
                 }`}
               >
+                {t.cover_url && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={t.cover_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                )}
                 {active ? (
                   <EqualizerBars bars={3} className="h-4" barClassName="bg-ink" />
                 ) : (
-                  <span className="text-sm text-white/70">♪</span>
+                  !t.cover_url && <span className="text-sm text-white/70">♪</span>
                 )}
               </span>
               <span className="min-w-0 flex-1">

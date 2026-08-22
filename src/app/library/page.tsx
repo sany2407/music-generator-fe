@@ -93,11 +93,21 @@ export default function LibraryPage() {
                     className="relative block aspect-square w-full overflow-hidden rounded-2xl bg-gradient-to-br from-neon-violet/30 via-panel to-neon-cyan/20"
                     aria-label={`Play ${t.name}`}
                   >
+                    {t.cover_url && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={t.cover_url}
+                        alt={`${t.name} album cover`}
+                        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                      />
+                    )}
                     <span className="absolute inset-0 flex items-center justify-center">
                       {active ? (
-                        <EqualizerBars bars={9} className="h-12 w-24" />
+                        <EqualizerBars bars={9} className="h-12 w-24" barClassName={t.cover_url ? "bg-white" : undefined} />
                       ) : (
-                        <span className="text-4xl text-white/25 transition group-hover:text-white/60">♪</span>
+                        !t.cover_url && (
+                          <span className="text-4xl text-white/25 transition group-hover:text-white/60">♪</span>
+                        )
                       )}
                     </span>
                     <span

@@ -54,10 +54,16 @@ export default function PlayerBar({ track }: { track: Track | null }) {
     <footer className="z-30 border-t border-white/8 bg-ink/85 backdrop-blur-xl">
       <div className="flex items-center gap-4 px-4 py-3 md:px-6">
         <div className="relative hidden h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-neon-violet via-neon-pink to-neon-cyan sm:block">
+          {track?.cover_url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={track.cover_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          )}
           {playing ? (
-            <EqualizerBars bars={4} className="h-5" barClassName="bg-ink" />
+            <EqualizerBars bars={4} className="h-5" barClassName={track?.cover_url ? "bg-white" : "bg-ink"} />
           ) : (
-            <span className="flex h-full items-center justify-center text-lg text-ink">♪</span>
+            !track?.cover_url && (
+              <span className="flex h-full items-center justify-center text-lg text-ink">♪</span>
+            )
           )}
         </div>
 

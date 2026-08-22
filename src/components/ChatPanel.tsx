@@ -13,6 +13,7 @@ export interface ChatMessage {
   lyrics?: string;
   trackUrl?: string;
   trackName?: string;
+  coverUrl?: string;
   error?: boolean;
 }
 
@@ -20,7 +21,7 @@ const SUGGESTIONS = [
   "a rainy evening walking alone through old city streets",
   "the electric rush of winning against all odds",
   "missing someone across a quiet ocean",
-  "slow morning sunlight through kitchen windows",
+  "a neon night drive — with an album cover of rain-streaked windshield lights",
 ];
 
 function parseEmotion(block: string): Record<string, string> {
@@ -190,6 +191,27 @@ export default function ChatPanel({
                       ▶ Play generated track
                     </button>
                   )}
+                  {m.coverUrl && (
+                    <a
+                      href={m.coverUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group/cover mt-4 block w-fit"
+                      title="Open album cover"
+                    >
+                      <span className="relative block overflow-hidden rounded-2xl border border-white/12 shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={m.coverUrl}
+                          alt="Generated album cover"
+                          className="block h-56 w-56 object-cover transition duration-300 group-hover/cover:scale-[1.03]"
+                        />
+                        <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pt-6 pb-2 text-[10px] font-bold tracking-[0.22em] text-white/80 uppercase opacity-0 transition group-hover/cover:opacity-100">
+                          Album cover · open
+                        </span>
+                      </span>
+                    </a>
+                  )}
                 </div>
               </div>
             )
@@ -259,7 +281,7 @@ export default function ChatPanel({
 
 export function messageFromResult(
   text: string,
-  result: { emotion_analysis: string; enhanced_prompt: string; track_url: string | null; track_name: string | null; lyrics?: string | null }
+  result: { emotion_analysis: string; enhanced_prompt: string; track_url: string | null; track_name: string | null; lyrics?: string | null; cover_url?: string | null }
 ): ChatMessage {
   return {
     role: "assistant",
@@ -269,6 +291,7 @@ export function messageFromResult(
     lyrics: result.lyrics ?? undefined,
     trackUrl: result.track_url ? audioUrl(result.track_url) : undefined,
     trackName: result.track_name ?? undefined,
+    coverUrl: result.cover_url ?? undefined,
   };
 }
 

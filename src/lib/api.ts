@@ -7,6 +7,7 @@ export interface Track {
   url: string;
   size_mb: number;
   created: number;
+  cover_url?: string | null;
 }
 
 export interface GenerateResult {
@@ -17,6 +18,7 @@ export interface GenerateResult {
   track_url: string | null;
   track_name: string | null;
   lyrics: string | null;
+  cover_url?: string | null;
 }
 
 export function audioUrl(url: string): string {
